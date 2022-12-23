@@ -98,54 +98,57 @@
     </div>
 
     <?php
+        error_reporting(E_ERROR | E_PARSE);
         $train = $_GET['train_number'];
 
-        $curl = curl_init();
-
-        curl_setopt_array($curl, [
-            CURLOPT_URL => "https://trains.p.rapidapi.com/",
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_ENCODING => "",
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 30,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => "POST",
-            CURLOPT_POSTFIELDS => "{\r\n    \"search\": \"$train\"\r\n}",
-            CURLOPT_HTTPHEADER => [
-                "X-RapidAPI-Host: trains.p.rapidapi.com",
-                "X-RapidAPI-Key: 7e5e5af3ecmsh085c993a9bc40d7p10e1a0jsnca89f109767e",
-                "content-type: application/json"
-            ],
-        ]);
-
-        $response = curl_exec($curl);
-        $err = curl_error($curl);
-
-        $data = json_decode($response, true);
-        // echo $response;
-
-        curl_close($curl);
-
-        if ($err) {
-            echo "cURL Error #:" . $err;
-        } else {
-            foreach ((array) $data as $value) {
-            ?>
-                <div class="div-center">
-                    <div>
-                        <h2><?php echo $value['name'] ?> (<?php echo $value['train_num'] ?>)</h2>
-                        <div class="div-center">
-                            <div>
-                                <h3><?php echo $value['train_from'] ?>  &nbsp ==>  &nbsp <?php echo $value['train_to'] ?></h3>
-                                <h3>Depart Time :<?php echo $value['data']['departTime'] ?> </h3>
-                                <h3>Arrive Time <?php echo $value['data']['arriveTime'] ?></h3>
-                            </div>
-                        <div>
-                    </div>
-                </div>
-        <?php
+        if($train != NULL){
             
+            $curl = curl_init();
+
+            curl_setopt_array($curl, [
+                CURLOPT_URL => "https://trains.p.rapidapi.com/",
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_ENCODING => "",
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 30,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => "POST",
+                CURLOPT_POSTFIELDS => "{\r\n    \"search\": \"$train\"\r\n}",
+                CURLOPT_HTTPHEADER => [
+                    "X-RapidAPI-Host: trains.p.rapidapi.com",
+                    "X-RapidAPI-Key: 7e5e5af3ecmsh085c993a9bc40d7p10e1a0jsnca89f109767e",
+                    "content-type: application/json"
+                ],
+            ]);
+
+            $response = curl_exec($curl);
+            $err = curl_error($curl);
+
+            $data = json_decode($response, true);
+            // echo $response;
+
+            curl_close($curl);
+
+            if ($err) {
+                echo "cURL Error #:" . $err;
+            } else {
+                foreach ((array) $data as $value) {
+                ?>
+                    <div class="div-center">
+                        <div>
+                            <h2><?php echo $value['name'] ?> (<?php echo $value['train_num'] ?>)</h2>
+                            <div class="div-center">
+                                <div>
+                                    <h3><?php echo $value['train_from'] ?>  &nbsp ==>  &nbsp <?php echo $value['train_to'] ?></h3>
+                                    <h3>Depart Time :<?php echo $value['data']['departTime'] ?> </h3>
+                                    <h3>Arrive Time <?php echo $value['data']['arriveTime'] ?></h3>
+                                </div>
+                            <div>
+                        </div>
+                    </div>
+                <?php
+                }
             }
         }
         ?>
