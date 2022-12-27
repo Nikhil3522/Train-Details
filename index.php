@@ -141,8 +141,18 @@
                             <div class="div-center">
                                 <div>
                                     <h3><?php echo $value['train_from'] ?>  &nbsp ==>  &nbsp <?php echo $value['train_to'] ?></h3>
-                                    <h3>Depart Time :<?php echo $value['data']['departTime'] ?> </h3>
+                                    <h3>Depart Time <?php echo $value['data']['departTime'] ?> </h3>
                                     <h3>Arrive Time <?php echo $value['data']['arriveTime'] ?></h3>
+                                    <?php 
+                                        echo "<h3> Available Days ( ";
+                                        foreach((array) $value['data']['days'] as $x => $d){
+                                            if($d == 1){
+                                                echo "$x, ";
+                                            }
+                                           
+                                        }
+                                        echo ")</h3>";
+                                        ?>
                                 </div>
                             <div>
                         </div>
