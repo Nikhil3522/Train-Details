@@ -91,6 +91,7 @@
 </head>
 <body>
     <div class="div-center">
+        <div><a href='pnr.php' class="button-20">PNR status </a></div>
         <form action="index.php" method="GET">
             <input type="text" name="train_number" placeholder="Enter Train Number or Train Name..." />
             <input type="submit" class="button-20" value="Search" />
